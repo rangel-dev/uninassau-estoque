@@ -1,12 +1,8 @@
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import RoutesComponent from "./routes";
-
 const App = () => {
   return (
-    <Router>
-      <RoutesComponent />
-    </Router>
+    <div className="bg-blue-500 text-white p-4">
+      <h1 className="text-2xl font-bold">Olá, Tailwind!</h1>
+    </div>
   );
 };
 
