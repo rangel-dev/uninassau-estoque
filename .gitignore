@@ -48,6 +48,7 @@ yarn-error.log*
 .vscode/
 
 # Arquivos do npm/yarn
+package.json
 package-lock.json
 yarn.lock
 
