@@ -1,10 +1,20 @@
-import React from "react";
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
-    <div className="p-4">
+    <div className="bg-green-500 text-white p-4">
       <h1 className="text-2xl font-bold">Dashboard</h1>
-      <p>Bem-vindo à página inicial!</p>
+      <nav className="mt-4">
+        <Link to="/estoque" className="mr-4 text-blue-200 hover:text-blue-400">
+          Estoque
+        </Link>
+        <Link to="/produtos" className="mr-4 text-blue-200 hover:text-blue-400">
+          Produtos
+        </Link>
+        <Link to="/relatorios" className="mr-4 text-blue-200 hover:text-blue-400">
+          Relatórios
+        </Link>
+      </nav>
     </div>
   );
 };
