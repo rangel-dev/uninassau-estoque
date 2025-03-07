@@ -1,14 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import RoutesComponent from './routes';
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
 
 const App = () => {
   return (
     <Router>
-            <Navbar/>
-
-      <RoutesComponent />
+        <div className="flex-1">
+          <Navbar /> {/* Navbar no topo */}
+          <RoutesComponent /> {/* Conteúdo das páginas */}
+        </div>
     </Router>
   );
 };
