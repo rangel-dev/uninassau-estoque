@@ -6,29 +6,34 @@ import ProductModal from "../components/ProductModal";
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Dados de exemplo para a tabela
-  const data = [
+  const tableData = [
     { id: 1, nome: "Produto A", categoria: "Categoria 1", quantidade: 10 },
     { id: 2, nome: "Produto B", categoria: "Categoria 2", quantidade: 5 },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto p-6">
-        <header className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4 sm:mb-0">
-            Dashboard
-          </h1>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header Section */}
+        <div className="mb-8 flex flex-col sm:flex-row justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+              Dashboard
+            </h1>
+            <p className="mt-2 text-sm text-gray-600">
+              Dados atualizados em tempo real
+            </p>
+          </div>
+          
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 transition"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
           >
             <svg
-              className="w-5 h-5 mr-2"
+              className="h-5 w-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -37,26 +42,37 @@ const Dashboard = () => {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            Adicionar Produto
+            Novo Produto
           </button>
-        </header>
+        </div>
 
-        {/* Seção de gráficos */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          <CardStats />
-          <CardStats />
+        {/* Key Metrics Section */}
+        <section className="mb-8">
           <CardStats />
         </section>
 
-        <section className="bg-white shadow rounded-lg p-4">
-          <Table data={data} />
+        {/* Inventory Section */}
+        <section className="rounded-xl bg-white shadow-sm">
+          <div className="p-6 border-b border-gray-100">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-gray-900">
+                Controle de Estoque
+              </h2>
+              <span className="text-sm text-gray-500">
+                Última atualização: 15/06/2023
+              </span>
+            </div>
+          </div>
+          <div className="overflow-x-auto p-4">
+            <Table data={tableData} />
+          </div>
         </section>
+
+        <ProductModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+        />
       </div>
-
-      <ProductModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-      />
     </div>
   );
 };
