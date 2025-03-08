@@ -10,7 +10,6 @@ pnpm-debug.log*
 # Builds e artefatos
 dist/
 build/
-out/
 coverage/
 
 # Configurações de IDE
