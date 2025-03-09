@@ -5,14 +5,13 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 
-
 const App = () => {
   return (
     <Router>
       <Navbar />
       <Sidebar />
-      <Footer />
       <RoutesComponent />
+      <Footer />
     </Router>
   );
 };
