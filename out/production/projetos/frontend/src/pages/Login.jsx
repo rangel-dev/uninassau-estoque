@@ -1,0 +1,40 @@
+import React from 'react';
+
+const Login = () => {
+  return (
+    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-white text-gray-900">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img className="mx-auto h-12 w-auto" src="https://aluno.uninassau.edu.br/Aluno/img/uninassau3.svg?29968" alt="Your Company" />
+      </div>
+
+      <div className="mt-30 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" action="#" method="POST">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium">Endereço de Email</label>
+            <div className="mt-2">
+              <input type="email" name="email" id="email" autoComplete="email" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#0056B0] sm:text-sm" />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="password" className="block text-sm font-medium">Senha</label>
+              <div className="text-sm">
+                <a href="/esquecisenha" className="font-semibold text-[#0056B0] hover:text-[#003C6D]">Esqueceu a senha?</a>
+              </div>
+            </div>
+            <div className="mt-2">
+              <input type="password" name="password" id="password" autoComplete="current-password" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#0056B0] sm:text-sm" />
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" className="flex w-full justify-center rounded-md bg-[#26396F] px-3 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-[#003C6D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003C6D]">Entrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
