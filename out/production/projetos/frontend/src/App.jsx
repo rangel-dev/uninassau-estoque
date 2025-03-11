@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import RoutesComponent from "./routes";
-import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
 
 const App = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,23 +22,8 @@ const App = () => {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <Navbar 
-          onMenuClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-          isMobile={isMobile}
-        />
-        
         <div className="flex flex-1 relative">
-          {/* Sidebar */}
-          <div className={`fixed inset-y-0 z-30 transform transition-all duration-300
-            ${isMobile ? 'w-16' : isDesktopCollapsed ? 'w-16' : 'w-64'}
-            ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
-            md:translate-x-0 md:relative`}>
-            
-            <Sidebar 
-              isCompact={isMobile ? false : isDesktopCollapsed}
-              onToggle={() => setIsDesktopCollapsed(!isDesktopCollapsed)}
-            />
-          </div>
+          <Sidebar />
 
           {/* Overlay para mobile */}
           {isMobileMenuOpen && (
@@ -58,7 +41,6 @@ const App = () => {
             <div className="p-4 sm:p-6 lg:p-8">
               <RoutesComponent />
             </div>
-            <Footer />
           </main>
         </div>
       </div>
