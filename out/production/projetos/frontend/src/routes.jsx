@@ -7,7 +7,7 @@ import Relatorio from "./pages/Relatorio";
 import Error from "./pages/Error";
 import Login from "./pages/Login";
 import EsqueciSenha from "./pages/EsqueciSenha";
-import UsuarioCadastro from "./pages/user/UsuarioCadastro";
+import UsuarioCriar from "./pages/user/UsuarioCriar";
 import UsuarioIndex from "./pages/user/UsuarioIndex";
 import UsuarioEditar from "./pages/user/UsuarioEditar";
 
@@ -21,7 +21,7 @@ const RoutesComponent = () => {
       <Route path="/estoque" element={<Estoque />} />
       <Route path="/produtos" element={<Produtos />} />
       <Route path="/relatorios" element={<Relatorio />} />
-      <Route path="/usuariocadastro" element={<UsuarioCadastro />} />
+      <Route path="/usuariocriar" element={<UsuarioCriar />} />
       <Route path="/usuarioindex" element={<UsuarioIndex />} />
       <Route path="/usuarioeditar" element={<UsuarioEditar />} />
       <Route path="/error" element={<Error />} />
