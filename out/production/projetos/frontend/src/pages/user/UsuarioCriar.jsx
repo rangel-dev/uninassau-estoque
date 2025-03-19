@@ -19,7 +19,7 @@ const UsuarioCriar = () => {
         {/* Botão de Voltar (vermelho) */}
         <a
           className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-red-600 bg-red-600 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:ring-3 focus:outline-hidden"
-          href="#"
+          href="/UsuarioIndex"
         >
           Voltar
         </a>
@@ -119,6 +119,19 @@ const UsuarioCriar = () => {
                   id="password"
                   className="mt-1 block w-full rounded-md border border-gray-300 p-2 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600"
                   placeholder="Insira a senha"
+                />
+              </div>
+
+              {/* CampoFunção */}
+              <div className="w-64">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Papel
+                </label>
+                <input
+                  type="text"
+                  id="function"
+                  className="mt-1 block w-full rounded-md border border-gray-300 p-2 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600"
+                  placeholder="Selecione a função"
                 />
               </div>
             </div>
