@@ -20,7 +20,7 @@ const UsuarioIndex = () => {
         {/* Botão de Voltar (vermelho) */}
         <a
           className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-red-600 bg-red-600 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:ring-3 focus:outline-hidden"
-          href="#"
+          href="/dashboard"
         >
           Voltar
         </a>
