@@ -27,7 +27,7 @@ const UsuarioIndex = () => {
       </div>
 
       {/* Campo de filtro */}
-      <div className="mt-4">
+      <div className="mt-8"> {/* Aumentei o margin-top para 2rem */}
         <div className="flex items-center">
           <input
             type="text"
@@ -43,18 +43,18 @@ const UsuarioIndex = () => {
       </div>
 
       {/* Tabela */}
-      <div className="mt-8">
+      <div className="mt-12"> {/* Aumentei o margin-top para 3rem */}
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-            <thead className="ltr:text-left rtl:text-right">
-              <tr>
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">Nome</th>
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">Nascimento</th>
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">CPF</th>
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">Papel</th>
-                <th className="px-4 py-2"></th>
-              </tr>
-            </thead>
+          <thead className="ltr:text-left rtl:text-right">
+  <tr className="bg-blue-600"> {/* Adicionei bg-blue-600 para o fundo azul */}
+    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">Nome</th> {/* Adicionei text-white para o texto branco */}
+    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">Nascimento</th>
+    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">CPF</th>
+    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">Papel</th>
+    <th className="px-4 py-2"></th> {/* Este th está vazio, então não precisa de text-white */}
+  </tr>
+</thead>
 
             <tbody className="divide-y divide-gray-200">
               <tr>
