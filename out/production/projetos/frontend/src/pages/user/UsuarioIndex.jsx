@@ -4,7 +4,7 @@ import { FaEdit, FaSearch } from "react-icons/fa"; // Importando ícones de láp
 const UsuarioIndex = () => {
   return (
     <div>
-      {/* Cabeçalho com título e botões */}
+
       <div className="flex items-center gap-4">
         {/* Título */}
         <h1 className="text-lg font-medium">CADASTRAR USUÁRIOS</h1>
@@ -26,7 +26,7 @@ const UsuarioIndex = () => {
         </a>
       </div>
 
-      {/* Campo de filtro com ícone de lupa */}
+      {/* Campo de filtro */}
       <div className="mt-4">
         <div className="flex items-center">
           <input
@@ -42,8 +42,8 @@ const UsuarioIndex = () => {
         </div>
       </div>
 
-      {/* Tabela de usuários */}
-      <div className="mt-8"> {/* Adicionei mt-8 para mover a tabela para baixo */}
+      {/* Tabela */}
+      <div className="mt-8">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="ltr:text-left rtl:text-right">

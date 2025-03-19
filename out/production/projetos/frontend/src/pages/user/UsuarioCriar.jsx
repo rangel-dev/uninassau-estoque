@@ -1,12 +1,12 @@
 import React from "react";
 
-const UsuarioEditar = () => {
+const UsuarioCriar = () => {
   return (
-    <div className="flex flex-col gap-8 p-4"> 
+    <div className="flex flex-col gap-8 p-4">
       {/* Cabeçalho com título e botões */}
       <div className="flex items-center gap-4">
         {/* Título */}
-        <h1 className="text-lg font-medium">EDITAR USUÁRIO</h1>
+        <h1 className="text-lg font-medium">NOVO USUÁRIO</h1>
 
         {/* Botão de Salvar */}
         <a
@@ -35,7 +35,7 @@ const UsuarioEditar = () => {
           <form className="rounded-xl bg-white p-4 ring-3 ring-indigo-50 sm:p-6 lg:p-8">
             <div className="flex flex-wrap gap-6">
               {/* Campo Nome */}
-              <div className="w-64"> {/* Largura fixa para o nome */}
+              <div className="w-64"> 
                 <label htmlFor="nome" className="block text-sm font-medium text-gray-700">
                   Nome
                 </label>
@@ -48,7 +48,7 @@ const UsuarioEditar = () => {
               </div>
 
               {/* Campo CPF */}
-              <div className="w-64"> 
+              <div className="w-64">
                 <label htmlFor="cpf" className="block text-sm font-medium text-gray-700">
                   CPF
                 </label>
@@ -61,7 +61,7 @@ const UsuarioEditar = () => {
               </div>
 
               {/* Campo Nascimento */}
-              <div className="w-48"> 
+              <div className="w-48">
                 <label htmlFor="birthdate" className="block text-sm font-medium text-gray-700">
                   Nascimento
                 </label>
@@ -110,7 +110,7 @@ const UsuarioEditar = () => {
               </div>
 
               {/* Campo Senha */}
-              <div className="w-64">
+              <div className="w-64"> {/* Largura fixa para a senha */}
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Senha
                 </label>
@@ -129,4 +129,4 @@ const UsuarioEditar = () => {
   );
 };
 
-export default UsuarioEditar;
+export default UsuarioCriar;
