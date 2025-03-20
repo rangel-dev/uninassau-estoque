@@ -48,7 +48,7 @@ const Main = ({
     }
   }, [location]);
 
-  const showSidebar = location.pathname !== '/login' && location.pathname !== '/';
+  const showSidebar = location.pathname !== '/login' && location.pathname !== '/' && location.pathname !== '/esquecisenha';
 
   return (
     <div className="min-h-screen flex flex-col">

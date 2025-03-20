@@ -17,6 +17,8 @@ import EstoqueIndex from "./pages/estoque/EstoqueIndex";
 import EstoqueCriar from "./pages/estoque/EstoqueCriar";
 import EstoqueEditar from "./pages/estoque/EstoqueEditar";
 import RelatoriosPedidos from "./pages/RelatorioPedidos";
+import PerfilIndex from "./pages/perfil/PerfilIndex";
+import PerfilEditar from "./pages/perfil/PerfilEditar";
 
 const RoutesComponent = () => {
   return (
@@ -38,6 +40,8 @@ const RoutesComponent = () => {
       <Route path="/estoqueindex" element={<EstoqueIndex />} />
       <Route path="/estoquecriar" element={<EstoqueCriar />} />
       <Route path="/estoqueeditar" element={<EstoqueEditar />} />
+      <Route path="perfilindex" element={<PerfilIndex />} />
+      <Route path="perfileditar" element={<PerfilEditar />} />
       <Route path="/error" element={<Error />} />
     </Routes>
   );
