@@ -84,7 +84,7 @@ const Sidebar = () => {
               <ul className="mt-2 space-y-1 px-2">
                 <li>
                   <a
-                    href="#"
+                    href="/usuariocriar"
                     className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     <FiUsers className="size-5" /> {/* Ícone de Usuários */}
@@ -133,7 +133,7 @@ const Sidebar = () => {
               <ul className="mt-2 space-y-1 px-4">
                 <li>
                   <a
-                    href="#"
+                    href="/relatorioestoque"
                     className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     <FiBox className="size-5" /> {/* Ícone de Estoques */}
@@ -143,7 +143,7 @@ const Sidebar = () => {
 
                 <li>
                   <a
-                    href="#"
+                    href="/relatoriopedidos"
                     className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     <FiFileText className="size-5" /> {/* Ícone de Pedidos */}
@@ -156,7 +156,7 @@ const Sidebar = () => {
 
           <li>
             <a
-              href="#"
+              href="/estoqueindex"
               className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
             >
               <FiBox className="size-5" /> {/* Ícone de Estoque */}
@@ -166,7 +166,7 @@ const Sidebar = () => {
 
           <li>
             <a
-              href="#"
+              href="fornecedorindex"
               className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
             >
               <FiTruck className="size-5" /> {/* Ícone de Fornecedores */}
