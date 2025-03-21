@@ -19,6 +19,7 @@ import EstoqueEditar from "./pages/estoque/EstoqueEditar";
 import RelatoriosPedidos from "./pages/RelatorioPedidos";
 import PerfilIndex from "./pages/perfil/PerfilIndex";
 import PerfilEditar from "./pages/perfil/PerfilEditar";
+import Userperfil from "./pages/userperfil/Userperfil";
 
 const RoutesComponent = () => {
   return (
@@ -42,6 +43,7 @@ const RoutesComponent = () => {
       <Route path="/estoqueeditar" element={<EstoqueEditar />} />
       <Route path="perfilindex" element={<PerfilIndex />} />
       <Route path="perfileditar" element={<PerfilEditar />} />
+      <Route path="/Userperfil" element={<Userperfil />} />
       <Route path="/error" element={<Error />} />
     </Routes>
   );
