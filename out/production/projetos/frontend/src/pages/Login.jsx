@@ -1,6 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../services/authService';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login({ email, password });
+      navigate('/'); // redireciona para a home ou dashboard
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao fazer login. Verifique suas credenciais.');
+    }
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-white text-gray-900">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -8,11 +25,20 @@ const Login = () => {
       </div>
 
       <div className="mt-30 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium">Endereço de Email</label>
             <div className="mt-2">
-              <input type="email" name="email" id="email" autoComplete="email" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#0056B0] sm:text-sm" />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                autoComplete="email"
+                required
+                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-[#0056B0] sm:text-sm"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
           </div>
 
@@ -24,12 +50,26 @@ const Login = () => {
               </div>
             </div>
             <div className="mt-2">
-              <input type="password" name="password" id="password" autoComplete="current-password" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#0056B0] sm:text-sm" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                autoComplete="current-password"
+                required
+                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-[#0056B0] sm:text-sm"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
           </div>
 
           <div>
-            <button type="submit" className="flex w-full justify-center rounded-md bg-[#26396F] px-3 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-[#003C6D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003C6D]">Entrar</button>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-[#26396F] px-3 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-[#003C6D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003C6D]"
+            >
+              Entrar
+            </button>
           </div>
         </form>
       </div>

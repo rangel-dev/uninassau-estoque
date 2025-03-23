@@ -1,7 +1,7 @@
 // src/services/productService.js
-import api from './api';
+import api from '../services/api';
 
-export async function getProducts() {
+export async function getAllProducts() {
   const response = await api.get('/products');
   return response.data;
 }
