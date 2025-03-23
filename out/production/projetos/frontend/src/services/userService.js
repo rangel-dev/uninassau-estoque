@@ -1,5 +1,11 @@
 import api from './api';
 
 export async function createUser(data) {
-  return api.post('/user/create', data);
+  const token = localStorage.getItem("token");
+
+  return api.post('/user/create', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
