@@ -1,7 +1,6 @@
-// src/pages/UsuarioCriar.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../services/authService";
+import { createUser } from "../../services/userService";
 
 const UsuarioCriar = () => {
   const navigate = useNavigate();
@@ -23,11 +22,12 @@ const UsuarioCriar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(formData);
+      await createUser(formData);
       alert("Usuário criado com sucesso!");
-      navigate("/login");
-    } catch {
-      alert("Erro ao cadastrar usuário");
+      navigate("/UsuarioIndex");
+    } catch (error) {
+      console.error(error);
+      alert(error.response?.data?.message || "Erro ao cadastrar usuário");
     }
   };
 
@@ -92,7 +92,7 @@ const UsuarioCriar = () => {
                   Nascimento
                 </label>
                 <input
-                  type="text"
+                  type="date"
                   id="birthdate"
                   value={formData.birthdate}
                   onChange={handleChange}
@@ -158,7 +158,7 @@ const UsuarioCriar = () => {
                   value={formData.userType}
                   onChange={handleChange}
                   className="mt-1 block w-full rounded-md border border-gray-300 p-2 focus:ring-2 focus:ring-indigo-600"
-                  placeholder="Selecione a função"
+                  placeholder="admin ou client"
                 />
               </div>
             </div>
