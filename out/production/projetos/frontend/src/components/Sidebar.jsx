@@ -175,26 +175,16 @@ const Sidebar = () => {
           </li>
 
           <li>
-            <a
-              href="/perfilindex"
-              className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              <FiUser className="size-5" /> {/* Ícone de Permissoes */}
-              Permissões
-            </a>
+            <form action="/login">
+              <button
+                type="submit"
+                className="flex w-full items-center gap-2 rounded-lg px-4 py-2 [text-align:_inherit] text-sm font-medium text-red-500 hover:bg-red-100 hover:text-red-700"
+              >
+                <FiLogOut className="size-5" /> {/* Ícone de Sair */}
+                Sair
+              </button>
+            </form>
           </li>
-
-          <li>
-                  <form action="/login">
-                    <button
-                      type="submit"
-                      className="flex w-full items-center gap-2 rounded-lg px-4 py-2 [text-align:_inherit] text-sm font-medium text-red-500 hover:bg-red-100 hover:text-red-700"
-                    >
-                      <FiLogOut className="size-5" /> {/* Ícone de Sair */}
-                      Sair
-                    </button>
-                  </form>
-                </li>
         </ul>
       </div>
     </div>
