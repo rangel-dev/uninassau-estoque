@@ -11,7 +11,7 @@ const Cadastro = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    userType: 'client',
+    userType: '',
   });
 
   const [erro, setErro] = useState('');

@@ -1,7 +1,14 @@
 // src/services/productService.js
-import api from '../services/api';
+import api from './api'; // Importa a instância do axios configurada
 
-export async function getAllProducts() {
-  const response = await api.get('/products');
-  return response.data;
-}
+// Exportação nomeada correta
+export const getAllProducts = async () => {
+  try {
+    const response = await api.get('/products');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
+  }
+};
+

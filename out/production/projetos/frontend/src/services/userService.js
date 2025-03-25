@@ -1,11 +1,17 @@
+
 import api from './api';
 
-export async function createUser(data) {
-  const token = localStorage.getItem("token");
+export async function createUser(userData) {
+  try {
+    const response = await api.post('/user/create', userData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
 
-  return api.post('/user/create', data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error in createUser:', error);
+    throw error;
+  }
 }
