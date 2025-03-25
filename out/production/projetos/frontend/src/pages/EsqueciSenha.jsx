@@ -24,10 +24,10 @@ const EsqueciSenha = () => {
           </div>
         </form>
 
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Lembrou da senha?
+        <div className="mt-10 flex justify-center items-center space-x-4 text-sm text-gray-500">
+          <span>Lembrou da senha?</span>
           <a href="/login" className="font-semibold text-[#0056B0] hover:text-[#003C6D]">Faça login aqui</a>
-        </p>
+        </div>
       </div>
     </div>
   );

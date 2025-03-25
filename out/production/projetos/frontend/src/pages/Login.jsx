@@ -45,9 +45,6 @@ const Login = () => {
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="password" className="block text-sm font-medium">Senha</label>
-              <div className="text-sm">
-                <a href="/esquecisenha" className="font-semibold text-[#0056B0] hover:text-[#003C6D]">Esqueceu a senha?</a>
-              </div>
             </div>
             <div className="mt-2">
               <input
@@ -62,7 +59,9 @@ const Login = () => {
               />
             </div>
           </div>
-
+          <div className="text-sm">
+                <a href="/esquecisenha" className="font-semibold text-[#0056B0] hover:text-[#003C6D]">Esqueceu a senha?</a>
+              </div>
           <div>
             <button
               type="submit"

@@ -31,7 +31,7 @@ const Sidebar = () => {
 
         <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
           <a
-            href="#"
+            href="/Userperfil"
             className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"
           >
             <img
@@ -84,7 +84,7 @@ const Sidebar = () => {
               <ul className="mt-2 space-y-1 px-2">
                 <li>
                   <a
-                    href="#"
+                    href="/usuariocriar"
                     className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     <FiUsers className="size-5" /> {/* Ícone de Usuários */}
@@ -133,7 +133,7 @@ const Sidebar = () => {
               <ul className="mt-2 space-y-1 px-4">
                 <li>
                   <a
-                    href="#"
+                    href="/relatorioestoque"
                     className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     <FiBox className="size-5" /> {/* Ícone de Estoques */}
@@ -143,7 +143,7 @@ const Sidebar = () => {
 
                 <li>
                   <a
-                    href="#"
+                    href="/relatoriopedidos"
                     className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                   >
                     <FiFileText className="size-5" /> {/* Ícone de Pedidos */}
@@ -156,7 +156,7 @@ const Sidebar = () => {
 
           <li>
             <a
-              href="#"
+              href="/estoqueindex"
               className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
             >
               <FiBox className="size-5" /> {/* Ícone de Estoque */}
@@ -166,7 +166,7 @@ const Sidebar = () => {
 
           <li>
             <a
-              href="#"
+              href="fornecedorindex"
               className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
             >
               <FiTruck className="size-5" /> {/* Ícone de Fornecedores */}
@@ -175,54 +175,26 @@ const Sidebar = () => {
           </li>
 
           <li>
-            <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                <div className="flex items-center gap-2">
-                  <FiUser className="size-5" /> {/* Ícone de Conta */}
-                  <span className="text-sm font-medium"> Conta </span>
-                </div>
+            <a
+              href="/perfilindex"
+              className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            >
+              <FiUser className="size-5" /> {/* Ícone de Permissoes */}
+              Permissões
+            </a>
+          </li>
 
-                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-              </summary>
-
-              <ul className="mt-2 space-y-1 px-4">
-                <li>
-                  <a
-                    href="#"
-                    className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                  >
-                    <FiUser className="size-5" /> {/* Ícone de Perfil */}
-                    Perfil
-                  </a>
-                </li>
-
-                <li>
-                  <form action="#">
+          <li>
+                  <form action="/login">
                     <button
                       type="submit"
-                      className="flex w-full items-center gap-2 rounded-lg px-4 py-2 [text-align:_inherit] text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      className="flex w-full items-center gap-2 rounded-lg px-4 py-2 [text-align:_inherit] text-sm font-medium text-red-500 hover:bg-red-100 hover:text-red-700"
                     >
                       <FiLogOut className="size-5" /> {/* Ícone de Sair */}
                       Sair
                     </button>
                   </form>
                 </li>
-              </ul>
-            </details>
-          </li>
         </ul>
       </div>
     </div>
