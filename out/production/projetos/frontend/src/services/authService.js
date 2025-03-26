@@ -14,11 +14,6 @@ export async function login(credentials) {
   }
 }
 
-// Cadastra um novo usuário
-export async function register(data) {
-  return api.post('/user/create', data);
-}
-
 // Remove o token do localStorage
 export function logout() {
   localStorage.removeItem('token');
