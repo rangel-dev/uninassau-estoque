@@ -57,7 +57,7 @@ const UsuarioIndex = () => {
 
         <a
           className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-indigo-600 bg-indigo-600 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600"
-          href="#"
+          href="/user/criar"
         >
           Criar Usuário
         </a>

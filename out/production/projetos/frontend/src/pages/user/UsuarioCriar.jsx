@@ -69,7 +69,7 @@ const UsuarioCriar = () => {
             Salvar
           </button>
           <a
-            href="/UsuarioIndex"
+            href="/user"
             className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -166,7 +166,10 @@ const InputField = ({
   placeholder = "",
 }) => (
   <div className="w-full">
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+    <label
+      htmlFor={id}
+      className="block text-sm font-medium text-gray-700 mb-1"
+    >
       {label}
     </label>
     <input

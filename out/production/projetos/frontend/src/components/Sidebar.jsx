@@ -53,7 +53,7 @@ const Sidebar = () => {
               <ul className="mt-2 space-y-1 px-2">
                 <li>
                   <a
-                    href="/usuariocriar"
+                    href="/user"
                     className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   >
                     <FiUsers className="size-5" />
@@ -128,7 +128,7 @@ const Sidebar = () => {
 
           <li>
             <a
-              href="/fornecedorindex"
+              href="/fornecedores"
               className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
             >
               <FiTruck className="size-5" />
@@ -152,7 +152,10 @@ const Sidebar = () => {
 
       {/* Perfil do usuário */}
       <div className="border-t border-gray-100 p-4">
-        <a href="/Userperfil" className="flex items-center gap-2 hover:bg-gray-50 p-2 rounded-lg">
+        <a
+          href="/Userperfil"
+          className="flex items-center gap-2 hover:bg-gray-50 p-2 rounded-lg"
+        >
           <img
             alt="Avatar"
             src={usuarioLogado.avatar}
@@ -160,7 +163,9 @@ const Sidebar = () => {
           />
           <div>
             <p className="text-sm font-medium">{usuarioLogado.nome}</p>
-            <span className="text-xs text-gray-600">ID: {usuarioLogado.id}</span>
+            <span className="text-xs text-gray-600">
+              ID: {usuarioLogado.id}
+            </span>
           </div>
         </a>
       </div>

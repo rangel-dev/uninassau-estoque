@@ -19,7 +19,7 @@ const FornecedoresCriar = () => {
         {/* Botão de Voltar (vermelho) */}
         <a
           className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-red-600 bg-red-600 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:ring-3 focus:outline-hidden"
-          href="/fornecedorindex"
+          href="/fornecedores"
         >
           Voltar
         </a>
@@ -36,7 +36,10 @@ const FornecedoresCriar = () => {
             <div className="flex flex-wrap gap-6">
               {/* Campo Nome do Fornecedor */}
               <div className="w-64">
-                <label htmlFor="nome" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="nome"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Nome do Fornecedor
                 </label>
                 <input
@@ -49,7 +52,10 @@ const FornecedoresCriar = () => {
 
               {/* Campo CNPJ */}
               <div className="w-64">
-                <label htmlFor="cnpj" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="cnpj"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   CNPJ
                 </label>
                 <input
@@ -62,7 +68,10 @@ const FornecedoresCriar = () => {
 
               {/* Campo Telefone */}
               <div className="w-64">
-                <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="telefone"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Telefone
                 </label>
                 <input
@@ -75,7 +84,10 @@ const FornecedoresCriar = () => {
 
               {/* Campo Categoria */}
               <div className="w-64">
-                <label htmlFor="categoria" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="categoria"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Categoria
                 </label>
                 <input
@@ -98,7 +110,10 @@ const FornecedoresCriar = () => {
             <div className="flex flex-wrap gap-6">
               {/* Campo Rua */}
               <div className="w-64">
-                <label htmlFor="rua" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="rua"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Rua
                 </label>
                 <input
@@ -111,7 +126,10 @@ const FornecedoresCriar = () => {
 
               {/* Campo Cidade */}
               <div className="w-64">
-                <label htmlFor="cidade" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="cidade"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Cidade
                 </label>
                 <input
@@ -124,7 +142,10 @@ const FornecedoresCriar = () => {
 
               {/* Campo Estado */}
               <div className="w-64">
-                <label htmlFor="estado" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="estado"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Estado
                 </label>
                 <input
@@ -137,7 +158,10 @@ const FornecedoresCriar = () => {
 
               {/* Campo CEP */}
               <div className="w-64">
-                <label htmlFor="cep" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="cep"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   CEP
                 </label>
                 <input
