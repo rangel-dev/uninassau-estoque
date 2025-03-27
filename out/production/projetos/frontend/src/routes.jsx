@@ -18,6 +18,8 @@ import EstoqueCriar from "./pages/estoque/EstoqueCriar";
 import EstoqueEditar from "./pages/estoque/EstoqueEditar";
 import RelatoriosPedidos from "./pages/RelatorioPedidos";
 import Userperfil from "./pages/userperfil/Userperfil";
+import PrivateRoute from "../src/routes/PrivateRoute";
+
 
 const RoutesComponent = () => {
   return (
@@ -40,6 +42,7 @@ const RoutesComponent = () => {
       <Route path="/estoquecriar" element={<EstoqueCriar />} />
       <Route path="/estoqueeditar" element={<EstoqueEditar />} />
       <Route path="/Userperfil" element={<Userperfil />} />
+      <Route path="/PrivateRoute" element={<PrivateRoute />} />
       <Route path="/error" element={<Error />} />
     </Routes>
   );

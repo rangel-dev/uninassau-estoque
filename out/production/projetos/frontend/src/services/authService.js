@@ -1,30 +1,32 @@
-import api from '../services/api';
+// services/authService.js
 
-// Faz login com email e senha
-export async function login(credentials) {
+export const isAuthenticated = () => {
+  return !!localStorage.getItem("token");
+};
+
+export const login = async (credentials) => {
   try {
-    const response = await api.post('/auth/login', credentials);
+    const response = await fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
 
-    // Armazena o token no localStorage
-    localStorage.setItem('token', response.data.token);
+    if (!response.ok) {
+      throw new Error("Erro ao fazer login");
+    }
 
-    return response.data;
+    const data = await response.json();
+    return data; // Retorna o token e demais informações
   } catch (error) {
-    throw error.response?.data || { message: "Erro ao fazer login" };
+    console.error("Erro na autenticação:", error);
+    throw error;
   }
-}
+};
 
-// Cadastra um novo usuário
-export async function register(data) {
-  return api.post('/user/create', data);
-}
-
-// Remove o token do localStorage
-export function logout() {
-  localStorage.removeItem('token');
-}
-
-// Verifica se há token salvo
-export function isAuthenticated() {
-  return !!localStorage.getItem('token');
-}
+export const logout = () => {
+  localStorage.removeItem("token");
+  window.location.href = "/login";
+};

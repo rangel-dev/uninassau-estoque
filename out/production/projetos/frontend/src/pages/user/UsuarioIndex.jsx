@@ -1,25 +1,69 @@
-import React from "react";
-import { FaEdit, FaSearch } from "react-icons/fa"; // Importando ícones de lápis e lupa
+import React, { useEffect, useState } from "react";
+import { FaEdit, FaSearch } from "react-icons/fa"; // Ícones de edição e pesquisa
 
 const UsuarioIndex = () => {
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const token = localStorage.getItem("token"); // Pegando o token JWT
+
+  useEffect(() => {
+    const fetchUsuarios = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/user", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Erro ao buscar usuários");
+        }
+
+        const data = await response.json();
+        setUsuarios(data); // Salvando os usuários no estado
+      } catch (error) {
+        console.error("Erro ao buscar usuários:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsuarios();
+  }, [token]);
+
+  // Formatar a data de nascimento para o formato dd/mm/yyyy
+  const formatarData = (data) => {
+    if (!data) return "";
+    const [ano, mes, dia] = data.split("-");
+    return `${dia}/${mes}/${ano}`;
+  };
+
+  // Filtrar usuários pelo nome
+  const usuariosFiltrados = usuarios.filter((user) =>
+    user.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  if (loading) {
+    return <p>Carregando usuários...</p>;
+  }
+
   return (
     <div>
-
       <div className="flex items-center gap-4">
-        {/* Título */}
         <h1 className="text-lg font-medium">CADASTRAR USUÁRIOS</h1>
 
-        {/* Botão de Criar Usuario */}
         <a
-          className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-indigo-600 bg-indigo-600 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden"
+          className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-indigo-600 bg-indigo-600 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600"
           href="#"
         >
           Criar Usuário
         </a>
 
-        {/* Botão de Voltar (vermelho) */}
         <a
-          className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-red-600 bg-red-600 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:ring-3 focus:outline-hidden"
+          className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-red-600 bg-red-600 text-sm font-medium text-white hover:bg-transparent hover:text-red-600"
           href="/dashboard"
         >
           Voltar
@@ -27,80 +71,78 @@ const UsuarioIndex = () => {
       </div>
 
       {/* Campo de filtro */}
-      <div className="mt-8"> {/* Aumentei o margin-top para 2rem */}
+      <div className="mt-8">
         <div className="flex items-center">
           <input
             type="text"
             placeholder="Filtrar usuário..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
           />
-          <button
-            className="px-4 py-2 bg-indigo-600 text-white rounded-r-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-          >
-            <FaSearch className="inline-block" /> {/* Ícone de lupa */}
+          <button className="px-4 py-2 bg-indigo-600 text-white rounded-r-sm hover:bg-indigo-700">
+            <FaSearch className="inline-block" />
           </button>
         </div>
       </div>
 
       {/* Tabela */}
-      <div className="mt-12"> {/* Aumentei o margin-top para 3rem */}
+      <div className="mt-12">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-          <thead className="ltr:text-left rtl:text-right">
-  <tr className="bg-blue-600"> {/* Adicionei bg-blue-600 para o fundo azul */}
-    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">Nome</th> {/* Adicionei text-white para o texto branco */}
-    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">Nascimento</th>
-    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">CPF</th>
-    <th className="px-4 py-2 font-medium whitespace-nowrap text-white">Papel</th>
-    <th className="px-4 py-2"></th> {/* Este th está vazio, então não precisa de text-white */}
-  </tr>
-</thead>
-
+            <thead className="ltr:text-left rtl:text-right">
+              <tr className="bg-blue-600">
+                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
+                  Nome
+                </th>
+                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
+                  Nascimento
+                </th>
+                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
+                  CPF
+                </th>
+                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
+                  Papel
+                </th>
+                <th className="px-4 py-2"></th>
+              </tr>
+            </thead>
             <tbody className="divide-y divide-gray-200">
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">John Doe</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">24/05/1995</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">Web Developer</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">Colaborador</td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="#"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+              {usuariosFiltrados.length > 0 ? (
+                usuariosFiltrados.map((user) => (
+                  <tr key={user.id}>
+                    <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">
+                      {user.name}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap text-gray-700">
+                      {formatarData(user.birthday)}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap text-gray-700">
+                      {user.cpf}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap text-gray-700">
+                      {user.userType}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      <a
+                        href="#"
+                        className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                      >
+                        <FaEdit className="inline-block" />
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="px-4 py-2 text-center text-gray-700"
                   >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">Jane Doe</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">04/11/1980</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">Web Designer</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">Admin</td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="#"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">Gary Barlow</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">24/05/1995</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">Singer</td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">Admin</td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="#"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
+                    Nenhum usuário encontrado
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
