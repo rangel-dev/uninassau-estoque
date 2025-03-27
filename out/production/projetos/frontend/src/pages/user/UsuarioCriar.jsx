@@ -24,13 +24,37 @@ const UsuarioCriar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.password) {
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const rawCpf = formData.cpf.replace(/\D/g, "");
+    const rawPhone = formData.phoneNumber.replace(/\D/g, "");
+
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.cpf ||
+      !formData.phoneNumber
+    ) {
       toast.warn("Por favor, preencha todos os campos obrigatórios");
       return;
     }
 
+    if (!emailRegex.test(formData.email)) {
+      toast.warn("Email inválido");
+      return;
+    }
+
+    if (rawCpf.length !== 11) {
+      toast.warn("CPF deve conter 11 dígitos");
+      return;
+    }
+
+    if (rawPhone.length < 10) {
+      toast.warn("Telefone inválido");
+      return;
+    }
+
     try {
-      const rawCpf = formData.cpf.replace(/\D/g, "");
       const formattedCpf = rawCpf.replace(
         /(\d{3})(\d{3})(\d{3})(\d{2})/,
         "$1.$2.$3-$4"

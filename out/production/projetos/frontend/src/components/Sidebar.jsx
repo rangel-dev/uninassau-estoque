@@ -153,7 +153,7 @@ const Sidebar = () => {
       {/* Perfil do usuário */}
       <div className="border-t border-gray-100 p-4">
         <a
-          href="/Userperfil"
+          href="/perfil"
           className="flex items-center gap-2 hover:bg-gray-50 p-2 rounded-lg"
         >
           <img
