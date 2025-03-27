@@ -1,12 +1,16 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
+// Páginas públicas
+import Login from "./pages/Login";
+import EsqueciSenha from "./pages/EsqueciSenha";
+
+// Páginas privadas
 import Dashboard from "./pages/Dashboard";
 import Estoque from "./pages/Estoque";
 import Produtos from "./pages/Produtos";
 import RelatorioEstoque from "./pages/RelatorioEstoque";
-import Error from "./pages/Error";
-import Login from "./pages/Login";
-import EsqueciSenha from "./pages/EsqueciSenha";
+import RelatoriosPedidos from "./pages/RelatorioPedidos";
 import UsuarioCriar from "./pages/user/UsuarioCriar";
 import UsuarioIndex from "./pages/user/UsuarioIndex";
 import UsuarioEditar from "./pages/user/UsuarioEditar";
@@ -16,34 +20,41 @@ import FornecedorEditar from "./pages/fornecedores/FornecedorEditar";
 import EstoqueIndex from "./pages/estoque/EstoqueIndex";
 import EstoqueCriar from "./pages/estoque/EstoqueCriar";
 import EstoqueEditar from "./pages/estoque/EstoqueEditar";
-import RelatoriosPedidos from "./pages/RelatorioPedidos";
 import Userperfil from "./pages/userperfil/Userperfil";
-import PrivateRoute from "../src/routes/PrivateRoute";
 
+// Outros
+import Error from "./pages/Error";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const RoutesComponent = () => {
   return (
     <Routes>
+      {/* Rotas públicas */}
       <Route path="/" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/esquecisenha" element={<EsqueciSenha />} />
-      <Route path="/estoque" element={<Estoque />} />
-      <Route path="/produtos" element={<Produtos />} />
-      <Route path="/relatorioestoque" element={<RelatorioEstoque />} />
-      <Route path="/relatoriopedidos" element={<RelatoriosPedidos />} />
-      <Route path="/usuariocriar" element={<UsuarioCriar />} />
-      <Route path="/usuarioindex" element={<UsuarioIndex />} />
-      <Route path="/usuarioeditar" element={<UsuarioEditar />} />
-      <Route path="/fornecedorindex" element={<FornecedorIndex />} />
-      <Route path="/fornecedorcriar" element={<FornecedorCriar />} />
-      <Route path="/fornecedoreditar" element={<FornecedorEditar />} />
-      <Route path="/estoqueindex" element={<EstoqueIndex />} />
-      <Route path="/estoquecriar" element={<EstoqueCriar />} />
-      <Route path="/estoqueeditar" element={<EstoqueEditar />} />
-      <Route path="/Userperfil" element={<Userperfil />} />
-      <Route path="/PrivateRoute" element={<PrivateRoute />} />
-      <Route path="/error" element={<Error />} />
+
+      {/* Rotas protegidas */}
+      <Route element={<PrivateRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/estoque" element={<Estoque />} />
+        <Route path="/produtos" element={<Produtos />} />
+        <Route path="/relatorioestoque" element={<RelatorioEstoque />} />
+        <Route path="/relatoriopedidos" element={<RelatoriosPedidos />} />
+        <Route path="/user/criar" element={<UsuarioCriar />} />
+        <Route path="/user" element={<UsuarioIndex />} />
+        <Route path="/user/editar/:id" element={<UsuarioEditar />} />
+        <Route path="/fornecedores" element={<FornecedorIndex />} />
+        <Route path="/fornecedores/criar" element={<FornecedorCriar />} />
+        <Route path="/fornecedores/editar/:id" element={<FornecedorEditar />} />
+        <Route path="/estoqueindex" element={<EstoqueIndex />} />
+        <Route path="/estoque/criar" element={<EstoqueCriar />} />
+        <Route path="/estoque/editar/:id" element={<EstoqueEditar />} />
+        <Route path="/perfil" element={<Userperfil />} />
+      </Route>
+
+      {/* Rota de erro 404 */}
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 };
