@@ -35,11 +35,6 @@ const UsuarioCriar = () => {
         /(\d{3})(\d{3})(\d{3})(\d{2})/,
         "$1.$2.$3-$4"
       );
-      const rawCpf = formData.cpf.replace(/\D/g, "");
-      const formattedCpf = rawCpf.replace(
-        /(\d{3})(\d{3})(\d{3})(\d{2})/,
-        "$1.$2.$3-$4"
-      );
 
       const userData = {
         name: formData.name,
