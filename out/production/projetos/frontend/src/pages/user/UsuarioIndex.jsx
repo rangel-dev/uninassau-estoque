@@ -15,6 +15,7 @@ const UsuarioIndex = () => {
 
   const fetchUsuarios = async () => {
     try {
+      console.log("Buscando lista de usuários...");
       const response = await fetch("http://localhost:8080/user", {
         method: "GET",
         headers: {
@@ -24,15 +25,17 @@ const UsuarioIndex = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao buscar usuários");
+        throw new Error(`Erro ao buscar usuários: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log("Usuários recebidos:", data);
       setUsuarios(data);
     } catch (error) {
-      console.error("Erro ao buscar usuários:", error);
+      console.error("Erro ao buscar usuários:", error.message);
     } finally {
       setLoading(false);
+      console.log("Carregamento concluído, loading:", false);
     }
   };
 
@@ -40,7 +43,8 @@ const UsuarioIndex = () => {
     if (!window.confirm("Tem certeza que deseja excluir este usuário?")) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/user/${id}`, {
+      console.log(`Excluindo usuário com ID: ${id}`);
+      const response = await fetch(`http://localhost:8080/user/delete/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -48,14 +52,19 @@ const UsuarioIndex = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao excluir usuário");
+        const errorText = await response.text();
+        console.error("Resposta do servidor:", errorText);
+        throw new Error(
+          `Erro ao excluir usuário: ${response.status} - ${errorText}`
+        );
       }
 
+      console.log("Usuário excluído com sucesso!");
       toast.success("Usuário excluído com sucesso!");
-      fetchUsuarios();
+      fetchUsuarios(); // Atualiza a lista de usuários após a exclusão
     } catch (error) {
-      console.error("Erro ao excluir usuário:", error);
-      toast.error("Erro ao excluir usuário");
+      console.error("Erro ao excluir usuário:", error.message);
+      toast.error("Erro ao excluir usuário: " + error.message);
     }
   };
 
@@ -104,20 +113,34 @@ const UsuarioIndex = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nome</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Email</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">CPF</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nascimento</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Ações</th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                Nome
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                Email
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                CPF
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                Nascimento
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                Ações
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white">
             {usuariosFiltrados.map((user) => (
               <tr key={user.id}>
                 <td className="px-4 py-2 text-sm text-gray-800">{user.name}</td>
-                <td className="px-4 py-2 text-sm text-gray-800">{user.email}</td>
+                <td className="px-4 py-2 text-sm text-gray-800">
+                  {user.email}
+                </td>
                 <td className="px-4 py-2 text-sm text-gray-800">{user.cpf}</td>
-                <td className="px-4 py-2 text-sm text-gray-800">{formatarData(user.birthday)}</td>
+                <td className="px-4 py-2 text-sm text-gray-800">
+                  {formatarData(user.birthday)}
+                </td>
                 <td className="px-4 py-2 flex gap-3 items-center">
                   <Link
                     to={`/user/editar/${user.id}`}
