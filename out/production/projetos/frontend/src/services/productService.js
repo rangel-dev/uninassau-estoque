@@ -12,3 +12,21 @@ export const getAllProducts = async () => {
   }
 };
 
+export const uploadPlanilha = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await api.post("/products/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data; // Retorna a resposta do backend
+  } catch (error) {
+    console.error("Erro ao enviar arquivo:", error);
+    throw error;
+  }
+};
+
+

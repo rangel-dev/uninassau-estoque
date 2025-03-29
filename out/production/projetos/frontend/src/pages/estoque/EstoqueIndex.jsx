@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { uploadPlanilha } from "../../services/productService"; // Função de upload da planilha
 import { FaEdit, FaSearch } from "react-icons/fa"; // Ícones de lápis e lupa
 
 const EstoqueIndex = () => {
+  const [file, setFile] = useState(null); // Estado para armazenar o arquivo selecionado
+
+  // Função para lidar com a seleção de arquivo
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]); // Salva o arquivo selecionado no estado
+  };
+
+  // Função para realizar o upload
+  const handleUpload = async () => {
+    try {
+      if (file) {
+        const response = await uploadPlanilha(file); // Faz o upload utilizando o serviço
+        console.log("Upload realizado com sucesso:", response);
+        alert("Upload realizado com sucesso!");
+      } else {
+        alert("Por favor, selecione um arquivo antes de fazer o upload.");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar a planilha:", error);
+      alert("Ocorreu um erro ao enviar a planilha. Verifique o console para mais detalhes.");
+    }
+  };
+
   return (
     <div>
       {/* Cabeçalho com título e botões */}
@@ -26,6 +50,24 @@ const EstoqueIndex = () => {
         </a>
       </div>
 
+      {/* Slot para Upload de Arquivo */}
+      <div className="mt-4">
+        <h2 className="text-lg font-medium">Upload de Planilha</h2>
+        <div className="flex items-center gap-2 mt-2">
+          <input
+            type="file"
+            onChange={handleFileChange} // Captura o arquivo selecionado
+            className="border border-gray-300 px-4 py-2 rounded-sm focus:ring-2 focus:ring-indigo-600"
+          />
+          <button
+            onClick={handleUpload} // Realiza o upload ao clicar
+            className="px-4 py-2 text-white bg-green-600 rounded-sm hover:bg-green-700 focus:ring-2 focus:ring-green-600"
+          >
+            Upload
+          </button>
+        </div>
+      </div>
+
       {/* Campo de filtro */}
       <div className="mt-8">
         <div className="flex items-center">
@@ -35,7 +77,7 @@ const EstoqueIndex = () => {
             className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
           />
           <button className="px-4 py-2 bg-indigo-600 text-white rounded-r-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600">
-            <FaSearch className="inline-block" /> {/* Ícone de lupa */}
+            <FaSearch className="inline-block" />
           </button>
         </div>
       </div>
@@ -58,8 +100,7 @@ const EstoqueIndex = () => {
                 <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
                   Data de Entrada
                 </th>
-                <th className="px-4 py-2"></th>{" "}
-                {/* Coluna para o botão editar */}
+                <th className="px-4 py-2"></th>
               </tr>
             </thead>
 
@@ -68,9 +109,7 @@ const EstoqueIndex = () => {
                 <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">
                   Luvas Cirúrgicas
                 </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  150
-                </td>
+                <td className="px-4 py-2 whitespace-nowrap text-gray-700">150</td>
                 <td className="px-4 py-2 whitespace-nowrap text-gray-700">
                   Equipamentos Médicos
                 </td>
@@ -78,58 +117,7 @@ const EstoqueIndex = () => {
                   05/04/2025
                 </td>
                 <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="/estoqueeditar"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">
-                  Máscaras Descartáveis
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  300
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  EPI
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  03/04/2025
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="/estoqueeditar"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">
-                  Álcool Gel 500ml
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  100
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  Higiene
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  01/04/2025
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="estoqueeditar"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
+                  <FaEdit className="inline-block text-indigo-600" />
                 </td>
               </tr>
             </tbody>
@@ -141,3 +129,4 @@ const EstoqueIndex = () => {
 };
 
 export default EstoqueIndex;
+
