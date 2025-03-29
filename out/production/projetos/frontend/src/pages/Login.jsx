@@ -1,7 +1,6 @@
-// pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/authService";
+import { login, getTokenPayload } from "../services/authService";
 import useAuthRedirect from "../hooks/useAuthRedirect";
 
 const Login = () => {
@@ -18,6 +17,14 @@ const Login = () => {
 
       if (response && response.token) {
         localStorage.setItem("token", response.token);
+
+        const payload = getTokenPayload();
+        if (payload?.sub) {
+          localStorage.setItem("userEmail", payload.sub); // salva o e-mail
+        } else {
+          console.warn("E-mail do usuário não encontrado no token");
+        }
+
         navigate("/dashboard");
       }
     } catch (error) {

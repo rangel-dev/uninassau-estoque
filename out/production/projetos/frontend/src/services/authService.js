@@ -23,6 +23,18 @@ export const isAuthenticated = () => {
   }
 };
 
+export const getTokenPayload = () => {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload;
+  } catch (error) {
+    console.error("Erro ao decodificar o token:", error);
+    return null;
+  }
+};
 
 export const login = async (credentials) => {
   try {
@@ -39,7 +51,7 @@ export const login = async (credentials) => {
     }
 
     const data = await response.json();
-    return data; // Retorna o token e demais informações
+    return data; // Espera: { token: "...", ... }
   } catch (error) {
     console.error("Erro na autenticação:", error);
     throw error;
@@ -48,5 +60,6 @@ export const login = async (credentials) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("userId");
   window.location.href = "/login";
 };
