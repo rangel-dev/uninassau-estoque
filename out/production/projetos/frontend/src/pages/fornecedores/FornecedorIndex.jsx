@@ -1,147 +1,182 @@
-import React from "react";
-import { FaEdit, FaSearch } from "react-icons/fa"; // Importando ícones de lápis e lupa
+import React, { useEffect, useState } from "react";
+import { FaEdit, FaSearch, FaTrash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom"; // Adicionei useNavigate
+import { toast } from "react-toastify";
 
 const FornecedoresIndex = () => {
+  const [fornecedores, setFornecedores] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchFornecedores();
+  }, [token]);
+
+  const fetchFornecedores = async () => {
+    try {
+      console.log("Buscando lista de fornecedores...");
+      const response = await fetch("http://localhost:8080/suppliers", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar fornecedores: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Fornecedores recebidos:", data);
+      setFornecedores(data);
+    } catch (error) {
+      console.error("Erro ao buscar fornecedores:", error.message);
+    } finally {
+      setLoading(false);
+      console.log("Carregamento concluído, loading:", false);
+    }
+  };
+
+  const excluirFornecedor = async (id) => {
+    if (!window.confirm("Tem certeza que deseja excluir este fornecedor?"))
+      return;
+
+    try {
+      console.log(`Excluindo fornecedor com ID: ${id}`);
+      const response = await fetch(
+          `http://localhost:8080/suppliers/delete/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Resposta do servidor:", errorText);
+        throw new Error(
+            `Erro ao excluir fornecedor: ${response.status} - ${errorText}`
+        );
+      }
+
+      console.log("Fornecedor excluído com sucesso!");
+      toast.success("Fornecedor excluído com sucesso!");
+
+      setFornecedores((prevFornecedores) =>
+          prevFornecedores.filter((fornecedor) => fornecedor.id !== id)
+      );
+    } catch (error) {
+      console.error("Erro ao excluir fornecedor:", error.message);
+      toast.error("Erro ao excluir fornecedor: " + error.message);
+    }
+  };
+
+
+  const handleEdit = (fornecedor) => {
+    navigate(`/fornecedores/editar/${fornecedor.id}`, {
+      state: { fornecedor }
+    });
+  };
+
+  const fornecedoresFiltrados = fornecedores.filter((fornecedor) => {
+    const termo = search.toLowerCase();
+    return (
+        fornecedor.socialname.toLowerCase().includes(termo) ||
+        (fornecedor.cnpj && fornecedor.cnpj.toLowerCase().includes(termo)) ||
+        (fornecedor.cep && fornecedor.cep.toLowerCase().includes(termo)) ||
+        (fornecedor.category?.name &&
+            fornecedor.category.name.toLowerCase().includes(termo))
+    );
+  });
+
+  if (loading) return <p className="p-6">Carregando fornecedores...</p>;
+
   return (
-    <div>
-      <div className="flex items-center gap-4">
-        {/* Título */}
-        <h1 className="text-lg font-medium">CADASTRAR FORNECEDORES</h1>
-
-        {/* Botão de Criar Fornecedor */}
-        <a
-          className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-indigo-600 bg-indigo-600 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden"
-          href="/fornecedores/criar"
-        >
-          Criar Fornecedor
-        </a>
-
-        {/* Botão de Voltar (vermelho) */}
-        <a
-          className="inline-block min-w-[120px] px-6 py-3 text-center rounded-sm border border-red-600 bg-red-600 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:ring-3 focus:outline-hidden"
-          href="/dashboard"
-        >
-          Voltar
-        </a>
-      </div>
-
-      {/* Campo de filtro */}
-      <div className="mt-8">
-        {" "}
-        {/* Aumentei o margin-top para 2rem */}
-        <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="Filtrar fornecedor..."
-            className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
-          />
-          <button className="px-4 py-2 bg-indigo-600 text-white rounded-r-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600">
-            <FaSearch className="inline-block" /> {/* Ícone de lupa */}
-          </button>
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-semibold text-indigo-600">Fornecedores</h1>
+          <Link
+              to="/fornecedores/criar"
+              className="rounded-lg bg-green-600 px-4 py-2 text-white font-medium hover:bg-green-700"
+          >
+            Criar Fornecedor
+          </Link>
         </div>
-      </div>
 
-      {/* Tabela */}
-      <div className="mt-12">
-        {" "}
-        {/* Aumentei o margin-top para 3rem */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-            <thead className="ltr:text-left rtl:text-right">
-              <tr className="bg-blue-600">
-                {" "}
-                {/* Fundo azul */}
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
-                  Nome do Fornecedor
-                </th>
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
-                  CNPJ
-                </th>
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
-                  Contato
-                </th>
-                <th className="px-4 py-2 font-medium whitespace-nowrap text-white">
-                  Categoria
-                </th>
-                <th className="px-4 py-2"></th>{" "}
-                {/* Coluna para o botão editar */}
-              </tr>
+        <div className="flex items-center gap-2 mb-4">
+          <FaSearch className="text-gray-500" />
+          <input
+              type="text"
+              placeholder="Buscar por razão social, CNPJ, CEP ou categoria"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="border border-gray-300 rounded px-3 py-1 w-full max-w-sm"
+          />
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                Razão Social
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                CNPJ
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                CEP
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                Categoria
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                Ações
+              </th>
+            </tr>
             </thead>
-
-            <tbody className="divide-y divide-gray-200">
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">
-                  Saúde Total LTDA
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  11.222.333/0001-44
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  (11) 99999-1234
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  Materiais Hospitalares
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="/fornecedoreditar"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">
-                  Farmácia Educacional
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  44.555.666/0001-88
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  (21) 98888-5678
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  Medicamentos
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="/fornecedoreditar"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-2 font-medium whitespace-nowrap text-gray-900">
-                  MediPlus
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  77.888.999/0001-55
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  (31) 97777-4321
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-gray-700">
-                  Equipamentos Médicos
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                  <a
-                    href="/fornecedoreditar"
-                    className="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                  >
-                    <FaEdit className="inline-block" /> {/* Ícone de lápis */}
-                  </a>
-                </td>
-              </tr>
+            <tbody className="divide-y divide-gray-100 bg-white">
+            {fornecedoresFiltrados.map((fornecedor) => (
+                <tr key={fornecedor.id}>
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {fornecedor.socialname}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {fornecedor.cnpj}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {fornecedor.cep}
+                  </td>
+                  <td className="px-4 py-2 text-sm text-gray-800">
+                    {fornecedor.category?.name || "Sem categoria"}
+                  </td>
+                  <td className="px-4 py-2 flex gap-3 items-center">
+                    <button
+                        onClick={() => handleEdit(fornecedor)}
+                        className="text-indigo-600 hover:text-indigo-800"
+                        title="Editar"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                        onClick={() => excluirFornecedor(fornecedor.id)}
+                        className="text-red-600 hover:text-red-800"
+                        title="Excluir"
+                    >
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+            ))}
             </tbody>
           </table>
         </div>
       </div>
-    </div>
   );
 };
 
