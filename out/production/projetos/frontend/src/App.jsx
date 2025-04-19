@@ -1,22 +1,20 @@
-// App.jsx
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
-import RoutesComponent from "./routes";
 import Sidebar from "./components/Sidebar";
-
-// Toast
+import RoutesComponent from "./routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const App = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) setIsMobileMenuOpen(false);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setSidebarOpen(false); // Fecha se for desktop
     };
 
     handleResize();
@@ -26,13 +24,21 @@ const App = () => {
 
   return (
     <Router>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Main
         isMobile={isMobile}
-        isMobileMenuOpen={isMobileMenuOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-        isDesktopCollapsed={isDesktopCollapsed}
-        setIsDesktopCollapsed={setIsDesktopCollapsed}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
       />
     </Router>
   );
@@ -40,81 +46,79 @@ const App = () => {
 
 const Main = ({
   isMobile,
-  isMobileMenuOpen,
-  setIsMobileMenuOpen,
-  isDesktopCollapsed,
-  setIsDesktopCollapsed,
+  sidebarOpen,
+  setSidebarOpen,
 }) => {
   const location = useLocation();
 
   useEffect(() => {
-    if (
-      location.pathname === "/login" ||
-      location.pathname === "/" ||
-      location.pathname === "/esquecisenha"
-    ) {
-      setIsMobileMenuOpen(false);
-      setIsDesktopCollapsed(true);
+    if (["/login", "/", "/esquecisenha"].includes(location.pathname)) {
+      setSidebarOpen(false);
     }
-  }, [location]);
+  }, [location, setSidebarOpen]);
 
-  const showSidebar =
-    location.pathname !== "/login" &&
-    location.pathname !== "/" &&
-    location.pathname !== "/esquecisenha";
+  const showSidebar = !["/login", "/", "/esquecisenha"].includes(location.pathname);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex flex-1 relative">
-        {/* Botão Hamburguer */}
-        {showSidebar && isMobile && (
-          <button
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="fixed top-4 left-4 z-50 bg-white p-2 rounded-md shadow md:hidden"
-          >
-            <svg
-              className="w-6 h-6 text-gray-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-        )}
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar */}
+      {showSidebar && (
+        <>
+          {/* Mobile overlay */}
+          {isMobile && sidebarOpen && (
+            <div
+              className="fixed inset-0 z-20 bg-black/50 lg:hidden"
+              onClick={() => setSidebarOpen(false)}
+            />
+          )}
 
-        {/* Sidebar */}
-        {showSidebar && (
           <div
-            className={`fixed inset-y-0 z-30 transform transition-transform duration-300
-              ${isMobile ? "w-64" : isDesktopCollapsed ? "w-16" : "w-64"}
-              ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
-              md:translate-x-0 md:relative`}
+            className={`
+              z-30
+              ${isMobile ? "fixed inset-y-0 transform transition-transform duration-300 ease-in-out" : "lg:fixed lg:inset-y-0"}
+              ${isMobile ? (sidebarOpen ? "translate-x-0" : "-translate-x-full") : ""}
+            `}
           >
             <Sidebar
-              isCompact={isMobile ? false : isDesktopCollapsed}
-              onToggle={() => setIsDesktopCollapsed(!isDesktopCollapsed)}
+              isCompact={false} // sempre expandida
+              onToggle={() => {}} // desabilitado
             />
           </div>
+        </>
+      )}
+
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Mobile header */}
+        {showSidebar && isMobile && (
+          <header className="lg:hidden z-10 bg-white border-b border-gray-200">
+            <div className="flex items-center justify-between px-4 py-3">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="text-gray-500 hover:text-gray-600 focus:outline-none"
+                aria-label="Abrir menu"
+              >
+                {sidebarOpen ? (
+                  <FiX className="size-6" />
+                ) : (
+                  <FiMenu className="size-6" />
+                )}
+              </button>
+              <img
+                src="/logo-white.png"
+                alt="Logo"
+                className="h-8 object-contain"
+              />
+              <div className="w-6" />
+            </div>
+          </header>
         )}
 
-        {isMobileMenuOpen && (
-          <div
-            className="fixed inset-0 z-20 bg-black/50 md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-
-        {/* Conteúdo principal */}
+        {/* Content */}
         <main
-          className={`flex-1 min-w-0 transition-all duration-300 ${
-            isMobileMenuOpen ? "ml-36" : ""
-          } md:ml-${isDesktopCollapsed ? "1" : "1"}`}
+          className={`flex-1 overflow-y-auto focus:outline-none transition-all duration-300 ${
+            showSidebar && !isMobile ? "lg:ml-64" : ""
+          }`}
         >
           <div className="p-4 sm:p-6 lg:p-8">
             <RoutesComponent />
