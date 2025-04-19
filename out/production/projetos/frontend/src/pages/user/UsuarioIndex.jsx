@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaEdit, FaSearch, FaTrash } from "react-icons/fa";
+import { Edit, Trash2, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -25,14 +25,13 @@ const UsuarioIndex = () => {
         },
       });
 
-      if (!response.ok) {
-        throw new Error(`Erro ao buscar usuários: ${response.status}`);
-      }
+      if (!response.ok) throw new Error("Erro ao buscar usuários");
 
       const data = await response.json();
       setUsuarios(data);
     } catch (error) {
       console.error("Erro ao buscar usuários:", error.message);
+      toast.error("Erro ao carregar usuários");
     } finally {
       setLoading(false);
     }
@@ -45,29 +44,20 @@ const UsuarioIndex = () => {
 
   const excluirUsuario = async () => {
     if (!userIdParaExcluir) return;
-
     try {
       const response = await fetch(
         `http://localhost:8080/user/delete/${userIdParaExcluir}`,
         {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Erro ao excluir usuário: ${response.status} - ${errorText}`
-        );
-      }
+      if (!response.ok) throw new Error("Erro ao excluir");
 
       toast.success("Usuário excluído com sucesso!");
       fetchUsuarios();
     } catch (error) {
-      console.error("Erro ao excluir usuário:", error.message);
       toast.error("Erro ao excluir usuário: " + error.message);
     } finally {
       setShowModal(false);
@@ -91,63 +81,69 @@ const UsuarioIndex = () => {
     );
   });
 
-  if (loading) return <p className="p-6">Carregando usuários...</p>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen text-gray-500">
+        Carregando usuários...
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-indigo-600">Usuários</h1>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Gestão de Usuários</h1>
         <Link
           to="/user/criar"
-          className="rounded-lg bg-green-600 px-4 py-2 text-white font-medium hover:bg-green-700"
+          className="rounded-xl bg-green-600 px-5 py-2.5 text-white font-medium shadow hover:bg-green-700 transition-all"
         >
           Criar Usuário
         </Link>
       </div>
 
-      <div className="flex items-center gap-2 mb-4">
-        <FaSearch className="text-gray-500" />
+      <div className="flex items-center gap-3 mb-6 max-w-md">
+        <Search className="text-gray-500" />
         <input
           type="text"
           placeholder="Buscar por nome, email, CPF ou data"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-1 w-full max-w-sm"
+          className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="overflow-x-auto rounded-2xl shadow border border-gray-200 bg-white">
+        <table className="min-w-full divide-y divide-gray-100">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nome</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Email</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">CPF</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nascimento</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Ações</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nome</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">CPF</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nascimento</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Ações</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 bg-white">
+          <tbody className="divide-y divide-gray-100">
             {usuariosFiltrados.map((user) => (
-              <tr key={user.id}>
-                <td className="px-4 py-2 text-sm text-gray-800">{user.name}</td>
-                <td className="px-4 py-2 text-sm text-gray-800">{user.email}</td>
-                <td className="px-4 py-2 text-sm text-gray-800">{user.cpf}</td>
-                <td className="px-4 py-2 text-sm text-gray-800">{formatarData(user.birthday)}</td>
-                <td className="px-4 py-2 flex gap-3 items-center">
+              <tr key={user.id} className="hover:bg-gray-50 transition">
+                <td className="px-6 py-3 text-sm text-gray-800">{user.name}</td>
+                <td className="px-6 py-3 text-sm text-gray-800">{user.email}</td>
+                <td className="px-6 py-3 text-sm text-gray-800">{user.cpf}</td>
+                <td className="px-6 py-3 text-sm text-gray-800">{formatarData(user.birthday)}</td>
+                <td className="px-6 py-3 flex items-center gap-4">
                   <Link
                     to={`/user/editar/${user.id}`}
-                    className="text-indigo-600 hover:text-indigo-800"
+                    className="text-blue-600 hover:text-blue-800 transition"
                     title="Editar"
                   >
-                    <FaEdit />
+                    <Edit size={18} />
                   </Link>
                   <button
                     onClick={() => confirmarExclusao(user.id)}
-                    className="text-red-600 hover:text-red-800"
+                    className="text-red-500 hover:text-red-700 transition"
                     title="Excluir"
                   >
-                    <FaTrash />
+                    <Trash2 size={18} />
                   </button>
                 </td>
               </tr>
@@ -159,23 +155,23 @@ const UsuarioIndex = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full">
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">
-              Confirmar Exclusão
+          <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md animate-fade-in">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+              Confirmar exclusão
             </h2>
             <p className="text-gray-600 mb-6">
-              Tem certeza que deseja excluir este usuário?
+              Deseja realmente excluir este usuário? Essa ação não poderá ser desfeita.
             </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800"
+                className="px-4 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800"
               >
                 Cancelar
               </button>
               <button
                 onClick={excluirUsuario}
-                className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white"
+                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white shadow"
               >
                 Excluir
               </button>
