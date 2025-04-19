@@ -113,8 +113,8 @@ const Main = ({
         {/* Conteúdo principal */}
         <main
           className={`flex-1 min-w-0 transition-all duration-300 ${
-            isMobileMenuOpen ? "ml-16" : ""
-          } md:ml-${isDesktopCollapsed ? "16" : "64"}`}
+            isMobileMenuOpen ? "ml-36" : ""
+          } md:ml-${isDesktopCollapsed ? "1" : "1"}`}
         >
           <div className="p-4 sm:p-6 lg:p-8">
             <RoutesComponent />
